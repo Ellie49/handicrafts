@@ -29,3 +29,7 @@ app.use('/api/business', businessRouter);
 
 const authRouter = require('./routes/auth');
 app.use('/api/auth', authRouter);
+
+
+const favoritesRouter = require('./routes/favorites');
+app.use('/api/favorites', favoritesRouter);

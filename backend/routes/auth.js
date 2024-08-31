@@ -32,7 +32,8 @@ router.post('/register', [
 
     await user.save();
 
-    const payload = { user: { id: user.id, role: user.role } };
+    const payload = { user: { id: user.id, role: user.role, name: user.name,
+      profilePicture: user.profilePicture } };
 
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
       if (err) throw err;
@@ -68,7 +69,8 @@ router.post('/login', [
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
-    const payload = { user: { id: user.id, role: user.role } };
+    const payload = { user: { id: user.id, role: user.role, name: user.name,
+      profilePicture: user.profilePicture } };
 
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
       if (err) throw err;
@@ -80,6 +82,22 @@ router.post('/login', [
   }
 });
 
-
+// Update user profile
+router.put('/profile/:userId', async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.userId,
+      {
+        name: req.body.name,
+        email: req.body.email,
+        profilePicture: req.body.profilePicture
+      },
+      { new: true }
+    );
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 module.exports = router;

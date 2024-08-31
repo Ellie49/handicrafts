@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
 import {jwtDecode} from 'jwt-decode';
+import Navbar from '../components/Navbar';
 
 const Profile = () => {
   const [user, setUser] = useState({
     name: '',
     email: '',
-    profilePic: ''
+    profilePicture: ''
   });
 
   useEffect(() => {
@@ -21,10 +21,26 @@ const Profile = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Normally, you would send the updated user data to the server
-    alert('Profile updated successfully!');
+    try {
+      const response = await fetch(`http://localhost:5000/api/profile/${user.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+      });
+      if (response.ok) {
+        const updatedUser = await response.json();
+        setUser(updatedUser);
+        alert('Profile updated successfully!');
+      } else {
+        alert('Failed to update profile');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+    }
   };
 
   return (
@@ -57,8 +73,8 @@ const Profile = () => {
             <label className="block text-gray-700">Profile Picture URL</label>
             <input
               type="text"
-              name="profilePic"
-              value={user.profilePic}
+              name="profilePicture"
+              value={user.profilePicture}
               onChange={handleChange}
               className="w-full p-2 border rounded"
             />

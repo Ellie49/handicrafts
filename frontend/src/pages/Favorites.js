@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
+import { jwtDecode } from 'jwt-decode';
+import Footer from '../components/Footer';
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
+  const userId = jwtDecode(localStorage.getItem('token')).user._id;
 
   useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    setFavorites(storedFavorites);
-  }, []);
+    fetch(`http://localhost:5000/api/favorites/${userId}`)
+      .then(res => res.json())
+      .then(data => setFavorites(data))
+      .catch(err => console.error(err));
+  }, [userId]);
 
   return (
     <div>
@@ -26,6 +31,7 @@ const Favorites = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
