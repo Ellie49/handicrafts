@@ -12,6 +12,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get one business by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const business = await Business.findById(req.params.id);
+    if (!business) return res.status(404).json({ message: 'Business not found' });
+    res.json(business);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Add a new business
 router.post('/', async (req, res) => {
   const business = new Business({

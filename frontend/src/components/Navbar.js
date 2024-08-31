@@ -2,15 +2,63 @@ import React, { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 // Use the correct import statement without curly braces
 
+// const Navbar = () => {
+//   const [role, setRole] = useState(null);
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   useEffect(() => {
+//     const token = localStorage.getItem('token');
+//     if (token) {
+//       const userRole = jwtDecode(token).user.role;
+//       setRole(userRole);
+//       setIsLoggedIn(true);
+//     }
+//   }, []);
+
+//   const handleLogout = () => {
+//     localStorage.removeItem('token');
+//     setRole(null);
+//     setIsLoggedIn(false);
+//     window.location.href = '/';
+//   };
+
+//   return (
+//     <nav className="bg-gray-800 p-4">
+//       <div className="container mx-auto flex justify-between items-center">
+//         <h1 className="text-white text-lg">Bangladeshi Handicrafts</h1>
+//         <div>
+//           <a href="/blog" className="text-gray-300 hover:text-white mr-4">Blog</a>
+//           {isLoggedIn ? (
+//             <>
+//               {role === 'admin' && <a href="/admin" className="text-gray-300 hover:text-white mr-4">Admin Dashboard</a>}
+//               {role === 'customer' && <a href="/customer" className="text-gray-300 hover:text-white mr-4">My Account</a>}
+//               <button onClick={handleLogout} className="text-gray-300 hover:text-white">Logout</button>
+//             </>
+//           ) : (
+//             <>
+//               <a href="/login" className="text-gray-300 hover:text-white mr-4">Login</a>
+//               <a href="/register" className="text-gray-300 hover:text-white">Register</a>
+//             </>
+//           )}
+//         </div>
+//       </div>
+//     </nav>
+//   );
+// };
+
 const Navbar = () => {
   const [role, setRole] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      const userRole = jwtDecode(token).user.role;
-      setRole(userRole);
+      const decodedToken = jwtDecode(token);
+      setRole(decodedToken.user.role);
+      setUsername(decodedToken.user.name);  // Assuming the token contains the user's name
+      setProfilePic(decodedToken.user.profilePic);  // Assuming the token contains the user's profile picture URL
       setIsLoggedIn(true);
     }
   }, []);
@@ -26,13 +74,21 @@ const Navbar = () => {
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-white text-lg">Bangladeshi Handicrafts</h1>
-        <div>
+        <div className="flex items-center">
           <a href="/blog" className="text-gray-300 hover:text-white mr-4">Blog</a>
           {isLoggedIn ? (
             <>
               {role === 'admin' && <a href="/admin" className="text-gray-300 hover:text-white mr-4">Admin Dashboard</a>}
               {role === 'customer' && <a href="/customer" className="text-gray-300 hover:text-white mr-4">My Account</a>}
-              <button onClick={handleLogout} className="text-gray-300 hover:text-white">Logout</button>
+              <div className="flex items-center">
+                <img
+                  src={profilePic || 'https://example.com/default-avatar.png'}  // Provide a default profile picture
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full mr-2"
+                />
+                <span className="text-gray-300 mr-4">{username}</span>
+                <button onClick={handleLogout} className="text-gray-300 hover:text-white">Logout</button>
+              </div>
             </>
           ) : (
             <>
@@ -47,3 +103,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

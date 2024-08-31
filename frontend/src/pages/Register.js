@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {jwtDecode} from 'jwt-decode';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -64,6 +65,7 @@ const Register = () => {
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Register</button>
         {message && <p className="mt-4 text-red-500">{message}</p>}
       </form>
+      <Footer />
     </div>
   );
 };
