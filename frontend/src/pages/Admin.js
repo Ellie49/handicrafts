@@ -21,6 +21,7 @@
 
 import React, { useState } from 'react';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const Admin = () => {
   const [business, setBusiness] = useState({
@@ -71,6 +72,8 @@ const Admin = () => {
 
   return (
     <div className="container mx-auto mt-8">
+      
+      <Navbar />
       <h2 className="text-2xl font-bold">Add New Business</h2>
       <form onSubmit={handleSubmit} className="mt-4">
         <input

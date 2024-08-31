@@ -23,6 +23,14 @@ const BusinessPage = () => {
   if (error) return <p>{error}</p>; // Display error message
   if (!business) return <p>Loading...</p>;
 
+  const addToFavorites = () => {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    favorites.push(business);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    alert('Added to Favorites!');
+  };
+  
+
   return (
     <div>
       <Navbar />
@@ -45,9 +53,11 @@ const BusinessPage = () => {
                   <h4 className="text-lg font-bold">{product}</h4>
                   <p className="text-gray-600">Materials: ...</p>
                   <p className="text-gray-600">Crafting Method: ...</p>
-                  <button className="mt-2 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700 transition duration-300">
+                  <button onClick={addToFavorites} className="mt-2 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700 transition duration-300">
                     Add to Favorites
                   </button>
+
+                  
                 </div>
               ))}
             </div>

@@ -50,7 +50,7 @@ const Navbar = () => {
   const [role, setRole] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
-  const [profilePic, setProfilePic] = useState('');
+  const [profilePicture, setprofilePicture] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -58,7 +58,7 @@ const Navbar = () => {
       const decodedToken = jwtDecode(token);
       setRole(decodedToken.user.role);
       setUsername(decodedToken.user.name);  // Assuming the token contains the user's name
-      setProfilePic(decodedToken.user.profilePic);  // Assuming the token contains the user's profile picture URL
+      setprofilePicture(decodedToken.user.profilePicture);  // Assuming the token contains the user's profile picture URL
       setIsLoggedIn(true);
     }
   }, []);
@@ -82,11 +82,11 @@ const Navbar = () => {
               {role === 'customer' && <a href="/customer" className="text-gray-300 hover:text-white mr-4">My Account</a>}
               <div className="flex items-center">
                 <img
-                  src={profilePic || 'https://example.com/default-avatar.png'}  // Provide a default profile picture
+                  src={profilePicture || 'https://randomuser.me/api/portraits/men/32.jpg'}  // Provide a default profile picture
                   alt="Profile"
                   className="w-8 h-8 rounded-full mr-2"
                 />
-                <span className="text-gray-300 mr-4">{username}</span>
+                <span className="text-gray-300 mr-4">{username || 'User'}</span>
                 <button onClick={handleLogout} className="text-gray-300 hover:text-white">Logout</button>
               </div>
             </>

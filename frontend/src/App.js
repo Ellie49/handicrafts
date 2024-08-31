@@ -59,17 +59,24 @@ import Login from './pages/Login';
 import Admin from './pages/Admin';
 import Customer from './pages/Customer';
 import BusinessPage from './pages/BusinessPage';
+import Favorites from './pages/Favorites';
+import Profile from './pages/Profile';
+import Blog from './pages/Blog';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/customer" element={<Customer />} />
         <Route path="/business/:id" element={<BusinessPage />} /> {/* Updated from component to element */}
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/blog" element={<Blog />} />
       </Routes>
     </Router>
   );

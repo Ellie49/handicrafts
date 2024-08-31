@@ -30,7 +30,7 @@ const Login = () => {
         if (userRole === 'admin') {
           window.location.href = '/admin';
         } else {
-          window.location.href = '/customer';
+          window.location.href = '/home';
         }
       } else {
         setMessage(data.msg || 'Login failed');
